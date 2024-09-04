@@ -23,11 +23,13 @@ resource "google_kms_crypto_key_iam_binding" "gcs_service_account_binding" {
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
 
   members = ["serviceAccount:${data.google_storage_project_service_account.gcs_account.email_address}"]
+
+  depends_on = [module.aw_workload_project]
 }
 
 module "workload-bucket" {
   source  = "terraform-google-modules/cloud-storage/google//modules/simple_bucket"
-  version = "~> 6.1"
+  version = "~> 6.0.0"
 
   name       = "workload-bucket-${local.default_suffix}"
   project_id = module.aw_workload_project.project_id
@@ -37,5 +39,8 @@ module "workload-bucket" {
     default_kms_key_name = google_kms_crypto_key.hsm_encrypt_decrypt.id
   }
 
-  depends_on = [module.aw_workload_project]
+  depends_on = [
+    module.aw_workload_project,
+    google_kms_crypto_key_iam_binding.gcs_service_account_binding
+  ]
 }
