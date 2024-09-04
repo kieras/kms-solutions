@@ -40,6 +40,7 @@ gcloud services enable \
   cloudresourcemanager.googleapis.com \
   assuredworkloads.googleapis.com \
   orgpolicy.googleapis.com \
+  cloudkms.googleapis.com \
   --project ${PROJECT_ID}
 ```
 
