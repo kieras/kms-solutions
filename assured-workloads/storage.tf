@@ -18,11 +18,11 @@ module "storage_project" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 16.0"
 
-  project_id                  = "${var.aw_base_id}-workload-${local.default_suffix}"
+  project_id                  = "${var.aw_base_id}-storage-${local.default_suffix}"
   disable_services_on_destroy = true
   org_id                      = var.organization_id
   folder_id                   = var.aw_root_folder_id
-  name                        = "${var.aw_base_id} Workload"
+  name                        = "${var.aw_base_id} Storage"
   billing_account             = var.billing_account_id
   activate_apis = [
     "storage-api.googleapis.com"
