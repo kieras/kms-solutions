@@ -15,7 +15,7 @@
  */
 
 locals {
-  default_suffix             = random_string.id.result
+  default_suffix             = random_string.suffix.result
   aw_folder_name             = "${var.aw_name}-${local.default_suffix}"
   encryption_keys_project_id = "${var.aw_base_id}-kms-${local.default_suffix}"
   keyring_id                 = "${var.aw_base_id}-keyring-${local.default_suffix}"
@@ -26,25 +26,11 @@ locals {
   )
 
   current_allowed_restricted_services = data.google_folder_organization_policy.aw_policy_restrict_service_usage_current.list_policy[0].allow[0].values
-
-  new_allowed_restricted_services = [
-    "bigquery.googleapis.com",
-    "bigqueryconnection.googleapis.com",
-    "bigquerydatapolicy.googleapis.com",
-    "bigquerydatatransfer.googleapis.com",
-    "bigquerymigration.googleapis.com",
-    "bigqueryreservation.googleapis.com",
-    "bigquerystorage.googleapis.com",
-    "file.googleapis.com",
-    "networksecurity.googleapis.com"
-  ]
 }
 
-resource "random_string" "id" {
+resource "random_string" "suffix" {
   length  = 4
   upper   = false
-  lower   = true
-  numeric = true
   special = false
 }
 
@@ -93,7 +79,7 @@ module "org-policy" {
   exclude_folders  = []
   exclude_projects = []
 
-  allow             = setunion(local.current_allowed_restricted_services, local.new_allowed_restricted_services)
+  allow             = setunion(local.current_allowed_restricted_services, var.new_allowed_restricted_services)
   allow_list_length = 1
 
   depends_on = [google_assured_workloads_workload.primary]

@@ -14,27 +14,12 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = ">= 1.3"
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = ">= 5.43"
-    }
-    google-beta = {
-      source  = "hashicorp/google-beta"
-      version = ">= 5.43"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = ">=3.6.2"
-    }
-  }
+output "aw_id" {
+  description = "Assured Workload ID."
+  value       = module.assured_workloads.aw_id
+}
 
-  provider_meta "google" {
-    module_name = "blueprints/terraform/kms-solutions:assured-workloads-example/v0.2.0"
-  }
-  provider_meta "google-beta" {
-    module_name = "blueprints/terraform/kms-solutions:assured-workloads-example/v0.2.0"
-  }
+output "kms_key_id" {
+  description = "Crypto Key ID."
+  value       = module.assured_workloads.kms_key_id
 }

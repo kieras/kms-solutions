@@ -40,9 +40,8 @@ variable "aw_location" {
 }
 
 variable "aw_name" {
-  description = "Name of the workload."
+  description = "Base name of the workload."
   type        = string
-  default     = "My-AW-Workload"
 }
 
 variable "aw_base_id" {
@@ -52,7 +51,23 @@ variable "aw_base_id" {
 }
 
 variable "cryptokey_allowed_access_reasons" {
-  description = "The list of allowed reasons for access to this CryptoKey."
+  description = "The list of allowed reasons for access to this CryptoKey. You can check the supported values in https://cloud.google.com/assured-workloads/key-access-justifications/docs/justification-codes."
   type        = list(string)
   default     = null
+}
+
+variable "new_allowed_restricted_services" {
+  description = "The list of the restricted services that will be added as allowed. See the list of supported products by control package in https://cloud.google.com/assured-workloads/docs/supported-products."
+  type        = list(string)
+  default = [
+    "bigquery.googleapis.com",
+    "bigqueryconnection.googleapis.com",
+    "bigquerydatapolicy.googleapis.com",
+    "bigquerydatatransfer.googleapis.com",
+    "bigquerymigration.googleapis.com",
+    "bigqueryreservation.googleapis.com",
+    "bigquerystorage.googleapis.com",
+    "file.googleapis.com",
+    "networksecurity.googleapis.com"
+  ]
 }

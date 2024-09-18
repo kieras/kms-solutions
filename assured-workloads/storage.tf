@@ -14,8 +14,24 @@
  * limitations under the License.
  */
 
+module "storage_project" {
+  source  = "terraform-google-modules/project-factory/google"
+  version = "~> 16.0"
+
+  project_id                  = "${var.aw_base_id}-workload-${local.default_suffix}"
+  disable_services_on_destroy = true
+  org_id                      = var.organization_id
+  folder_id                   = var.aw_root_folder_id
+  name                        = "${var.aw_base_id} Workload"
+  billing_account             = var.billing_account_id
+  activate_apis = [
+    "storage-api.googleapis.com"
+  ]
+}
 data "google_storage_project_service_account" "gcs_account" {
-  project = module.aw_workload_project.project_id
+  project = module.storage_project.project_id
+
+  depends_on = [module.storage_project]
 }
 
 resource "google_kms_crypto_key_iam_binding" "gcs_service_account_binding" {
@@ -24,7 +40,7 @@ resource "google_kms_crypto_key_iam_binding" "gcs_service_account_binding" {
 
   members = ["serviceAccount:${data.google_storage_project_service_account.gcs_account.email_address}"]
 
-  depends_on = [module.aw_workload_project]
+  depends_on = [module.storage_project]
 }
 
 module "workload-bucket" {
@@ -32,7 +48,7 @@ module "workload-bucket" {
   version = "~> 6.0.0"
 
   name       = "workload-bucket-${local.default_suffix}"
-  project_id = module.aw_workload_project.project_id
+  project_id = module.storage_project.project_id
   location   = var.aw_location
 
   encryption = {
@@ -40,7 +56,7 @@ module "workload-bucket" {
   }
 
   depends_on = [
-    module.aw_workload_project,
+    module.storage_project,
     google_kms_crypto_key_iam_binding.gcs_service_account_binding
   ]
 }

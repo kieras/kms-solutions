@@ -14,6 +14,27 @@
  * limitations under the License.
  */
 
-provider "google-beta" {
-  user_project_override = true
+terraform {
+  required_version = ">= 1.3"
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = ">= 5.43"
+    }
+    google-beta = {
+      source  = "hashicorp/google-beta"
+      version = ">= 5.43"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = ">=3.6.2"
+    }
+  }
+
+  provider_meta "google" {
+    module_name = "blueprints/terraform/kms-solutions:assured-workloads/v0.2.0"
+  }
+  provider_meta "google-beta" {
+    module_name = "blueprints/terraform/kms-solutions:assured-workloads/v0.2.0"
+  }
 }

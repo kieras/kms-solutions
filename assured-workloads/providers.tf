@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 
-output "assured_workload_id" {
-  description = "Assured Workload ID."
-  value       = google_assured_workloads_workload.primary.id
-}
-
-output "aw_consumer_folder_id" {
-  description = "Assured Workload Consumer Folder ID."
-  value       = local.aw_consumer_folder_id
+# TODO: Let's use the "production" provider, when the provider supports the "key_access_justifications_policy" field in the KMS Key.
+provider "google-beta" {
+  user_project_override = true
 }
