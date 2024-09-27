@@ -17,12 +17,23 @@
 module "assured_workloads" {
   source = "../../assured-workloads"
 
-  organization_id      = var.org_id
-  billing_account_id   = var.billing_account
-  aw_root_folder_id    = var.folder_id
-  aw_name              = "My-AW-Workload"
+  org_id               = var.org_id
+  billing_account      = var.billing_account
+  folder_id            = var.folder_id
+  aw_name              = "AW-Wkld-EX"
   aw_compliance_regime = "JP_REGIONS_AND_SUPPORT"
   aw_location          = "asia-northeast1"
+  new_allowed_restricted_services = [
+    "bigquery.googleapis.com",
+    "bigqueryconnection.googleapis.com",
+    "bigquerydatapolicy.googleapis.com",
+    "bigquerydatatransfer.googleapis.com",
+    "bigquerymigration.googleapis.com",
+    "bigqueryreservation.googleapis.com",
+    "bigquerystorage.googleapis.com",
+    "file.googleapis.com",
+    "networksecurity.googleapis.com"
+  ]
   cryptokey_allowed_access_reasons = [
     "CUSTOMER_INITIATED_ACCESS",
     "MODIFIED_CUSTOMER_INITIATED_ACCESS",

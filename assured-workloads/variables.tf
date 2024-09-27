@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-variable "organization_id" {
+variable "org_id" {
   description = "The Organization ID."
   type        = string
 }
 
-variable "billing_account_id" {
+variable "billing_account" {
   description = "The Billing Account ID."
   type        = string
 }
 
-variable "aw_root_folder_id" {
+variable "folder_id" {
   description = "Root folder ID for the workload."
   type        = string
 }
@@ -59,15 +59,5 @@ variable "cryptokey_allowed_access_reasons" {
 variable "new_allowed_restricted_services" {
   description = "The list of the restricted services that will be added as allowed. See the list of supported products by control package in https://cloud.google.com/assured-workloads/docs/supported-products."
   type        = list(string)
-  default = [
-    "bigquery.googleapis.com",
-    "bigqueryconnection.googleapis.com",
-    "bigquerydatapolicy.googleapis.com",
-    "bigquerydatatransfer.googleapis.com",
-    "bigquerymigration.googleapis.com",
-    "bigqueryreservation.googleapis.com",
-    "bigquerystorage.googleapis.com",
-    "file.googleapis.com",
-    "networksecurity.googleapis.com"
-  ]
+  default     = []
 }

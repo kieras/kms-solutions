@@ -27,7 +27,7 @@ resource "google_folder" "test_folder" {
 
 module "project_ci_kms" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 16.0"
+  version = "~> 17.0"
 
   name              = "ci-kms-module"
   random_project_id = "true"
@@ -40,7 +40,6 @@ module "project_ci_kms" {
     "serviceusage.googleapis.com",
     "compute.googleapis.com",
     "iam.googleapis.com",
-    "artifactregistry.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "cloudbilling.googleapis.com",
     "assuredworkloads.googleapis.com"
